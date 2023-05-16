@@ -31,11 +31,14 @@ public class RPGManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        turnQueue = new Queue<RPGActor>();
     }
 
     private void Start()
     {
         List<RPGActor> all = new List<RPGActor>();
+        
         all.AddRange(heroes);
         all.AddRange(enemies);
 
@@ -53,7 +56,22 @@ public class RPGManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(actualTurn == null)
+        {
+            actualTurn= turnQueue.Dequeue();
+        }
+
+        if (actualTurn.EndedTurn())
+        {
+            turnQueue.Enqueue(actualTurn);
+            actualTurn = turnQueue.Dequeue();            
+        }
+        else if (!actualTurn.IsOnTurn())
+        {
+            actualTurn.GiveTurn();
+        }
         
+
     }
 
     static RPGManager GetInstance()

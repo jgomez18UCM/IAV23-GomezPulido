@@ -7,11 +7,13 @@ public class RPGActor : MonoBehaviour
 
     bool onTurn;
     bool startTurn;
+    bool turnEnded;
     // Start is called before the first frame update
     void Start()
-    {
-        
-
+    {  
+        onTurn= false;
+        startTurn= false;
+        turnEnded = false;
     }
 
     // Update is called once per frame
@@ -21,26 +23,38 @@ public class RPGActor : MonoBehaviour
         {
             
             startTurn = false;
-            Debug.Log("Empezando Turno");
+            onTurn = true;
+            StartCoroutine(EndTurn());
+            Debug.Log("Empezando Turno: " + gameObject.name);
             return;
         }
-        if(onTurn)
+        if(turnEnded)
         {
-            EndTurn();
+            turnEnded = false;
         }
     }
 
     public void GiveTurn()
     {
-        startTurn = true;
+        if(!onTurn) startTurn = true;
+        
     }
 
     public bool IsOnTurn()
     {
         return onTurn || startTurn;
     }
-    void EndTurn()
+
+    public bool EndedTurn()
     {
-        onTurn= false;
+        return turnEnded;
+    }
+
+    IEnumerator EndTurn()
+    {
+        
+        yield return new WaitForSeconds(3);
+        onTurn = false;
+        turnEnded = true;
     }
 }
