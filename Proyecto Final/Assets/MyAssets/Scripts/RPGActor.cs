@@ -26,8 +26,9 @@ public class RPGActor : MonoBehaviour
             onTurn = true;
             StartCoroutine(EndTurn());
             Debug.Log("Empezando Turno: " + gameObject.name);
-            return;
         }
+
+
         if(turnEnded)
         {
             turnEnded = false;
