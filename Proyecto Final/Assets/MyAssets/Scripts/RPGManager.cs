@@ -51,30 +51,10 @@ public class RPGManager : MonoBehaviour
         }
 
         actualTurn = turnQueue.Dequeue();
+        actualTurn.GiveTurn();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(actualTurn == null)
-        {
-            actualTurn= turnQueue.Dequeue();
-        }
-
-        if (actualTurn.EndedTurn())
-        {
-            turnQueue.Enqueue(actualTurn);
-            actualTurn = turnQueue.Dequeue();            
-        }
-        else if (!actualTurn.IsOnTurn())
-        {
-            actualTurn.GiveTurn();
-        }
-        
-
-    }
-
-    static RPGManager GetInstance()
+    public static RPGManager GetInstance()
     {
         if(instance == null)
         {
@@ -83,5 +63,12 @@ public class RPGManager : MonoBehaviour
         }
 
         return instance;
+    }
+
+    public void EndActualTurn()
+    {
+        turnQueue.Enqueue(actualTurn);
+        actualTurn = turnQueue.Dequeue();
+        actualTurn.GiveTurn();
     }
 }
