@@ -1,5 +1,7 @@
+using BehaviorDesigner.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -12,6 +14,8 @@ public class RPGManager : MonoBehaviour
     [SerializeField]
     List<RPGActor> enemies;
 
+    [SerializeField]
+    TMP_Text turnText;
     
     Queue<RPGActor> turnQueue;
 
@@ -21,7 +25,7 @@ public class RPGManager : MonoBehaviour
 
 
     private void Awake()
-    {
+    {        
         if(instance == null)
         {
             instance = this;
@@ -52,6 +56,8 @@ public class RPGManager : MonoBehaviour
 
         actualTurn = turnQueue.Dequeue();
         actualTurn.GiveTurn();
+        actualTurn.SetSelect(true);
+        turnText.SetText(actualTurn.Name + "'s Turn");
     }
 
     public static RPGManager GetInstance()
@@ -68,7 +74,21 @@ public class RPGManager : MonoBehaviour
     public void EndActualTurn()
     {
         turnQueue.Enqueue(actualTurn);
+        actualTurn.SetSelect(false);
         actualTurn = turnQueue.Dequeue();
         actualTurn.GiveTurn();
+        turnText.SetText(actualTurn.Name + "'s Turn");
+        actualTurn.SetSelect(true);
+    }
+
+    public List<RPGActor> GetEnemies()
+    {
+        return enemies;
+    }
+
+    public List<RPGActor> GetHeroes()
+    {
+        return heroes;
+
     }
 }
