@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RPGManager : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class RPGManager : MonoBehaviour
         turnQueue = new Queue<RPGActor>();
     }
 
-    private void Start()
+    void Start()
     {
         List<RPGActor> all = new List<RPGActor>();
         
@@ -54,8 +55,13 @@ public class RPGManager : MonoBehaviour
             turnQueue.Enqueue(actor);
         }
 
+        ChangeTurn();
+    }
+
+    public void ChangeTurn()
+    {
         actualTurn = turnQueue.Dequeue();
-        actualTurn.GiveTurn();
+        actualTurn.OnStartTurn();
         actualTurn.SetSelect(true);
         turnText.SetText(actualTurn.Name + "'s Turn");
     }
@@ -75,10 +81,8 @@ public class RPGManager : MonoBehaviour
     {
         turnQueue.Enqueue(actualTurn);
         actualTurn.SetSelect(false);
-        actualTurn = turnQueue.Dequeue();
-        actualTurn.GiveTurn();
-        turnText.SetText(actualTurn.Name + "'s Turn");
-        actualTurn.SetSelect(true);
+        actualTurn.OnEndTurn();
+        ChangeTurn();
     }
 
     public List<RPGActor> GetEnemies()
@@ -90,5 +94,37 @@ public class RPGManager : MonoBehaviour
     {
         return heroes;
 
+    }
+    public void KillCharacter(RPGActor actor)
+    {
+        Queue<RPGActor> aux = new Queue<RPGActor>();
+        foreach(RPGActor ac in turnQueue)
+        {
+            turnQueue.Dequeue();
+            if (ac != actor)
+            {
+                aux.Enqueue(ac);
+            }
+        }
+        turnQueue = aux;
+
+        enemies.Remove(actor);
+        heroes.Remove(actor);
+
+        if(actor == actualTurn)
+        {
+            actualTurn.SetSelect(false);
+            actualTurn.OnEndTurn();
+            ChangeTurn();
+        }
+    }
+
+    public void RegisterHero(RPGActor hero)
+    {
+        if(!heroes.Contains(hero)) heroes.Add(hero);
+    }
+
+    public void RegisterEnemy(RPGActor enemy) {
+        if (!enemies.Contains(enemy)) enemies.Add(enemy);
     }
 }

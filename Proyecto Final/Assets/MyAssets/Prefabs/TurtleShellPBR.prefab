@@ -453,8 +453,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4304294397375969589}
   - component: {fileID: 4249387945546972391}
-  - component: {fileID: -5630189620070839858}
   - component: {fileID: 8488823232321849291}
+  - component: {fileID: 8225707193561302098}
+  - component: {fileID: 2744536735752395364}
   m_Layer: 0
   m_Name: TurtleShellPBR
   m_TagString: Untagged
@@ -500,18 +501,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-5630189620070839858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4300036372225649637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd1f8a9ca84a44a4bb786f7454f6e155, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &8488823232321849291
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -525,6 +514,69 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.87699276, z: 1.2412729}
   m_Center: {x: -0, y: 0.42874786, z: -0.12063646}
+--- !u!114 &8225707193561302098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300036372225649637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe05d61ff6eabd4aae127ac83bb6013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack: {fileID: 11400000, guid: 16af096c6e07dee4ab996af377b9fdce, type: 2}
+  heal: {fileID: 11400000, guid: 8f9a09c165ca6df43a669317dace5730, type: 2}
+  buff: {fileID: 0}
+  defend: {fileID: 0}
+  maxHealth: 100
+  actorName: Turtle
+  damageValue: 10
+  healValue: 5
+  healthBar: {fileID: 0}
+--- !u!114 &2744536735752395364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300036372225649637}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 1
+  restartWhenComplete: 1
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: 0b456d6d1479b964c8d2eb63394d4782, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Game
+        Object","IsShared":true,"GameObjectmValue":0}]}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects:
+        - {fileID: 4300036372225649637}
+        byteData: 
+        byteDataArray: 
+      Version: 1.7.4
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &4300088177048164819
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class HPBar : MonoBehaviour
     [SerializeField]
     TMP_Text HPText;
 
-    float HP;
+    int HP = -1;
 
     [SerializeField]
     [FloatSlider(0.1f,0.5f)]
@@ -28,18 +28,24 @@ public class HPBar : MonoBehaviour
 
     [SerializeField]
     TMP_Text nameLabel;
+
+    RPGActor myActor;
     // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        HP = 100;
+        if(myActor != null && HP == -1)
+        {
+
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetActor(RPGActor actor)
     {
-        
+        myActor = actor;
+        Bar.value = actor.GetHealth() / 100.0f;
+        nameLabel.text = actor.Name;
+        HPText.SetText(actor.GetHealth().ToString());
     }
-
     public void SetSelected(bool selected)
     {
         if(SelectedImage != null)
@@ -48,20 +54,30 @@ public class HPBar : MonoBehaviour
         }
     }
 
-    public IEnumerator SetDamage(float newHp)
+    public IEnumerator SetDamage(int newHp)
     {
         
-        float reductionStep = (HP - newHp) / (HPReductionAnimationDuration / HPReductionAnimationStep);
-        while (Bar.value * 100.0f > newHp)
+        float reductionStep = Mathf.Abs(HP - newHp) / (HPReductionAnimationDuration / HPReductionAnimationStep);
+        while (Bar.value * 100 > newHp)
         {
-            
-            Bar.value -= reductionStep / 100.0f;
-            HP -= reductionStep;
-            HPText.SetText(HP.ToString());
+            if (HP > newHp)
+            {
+                Bar.value -= reductionStep / 100.0f;
+            }
+            else
+            {
+                Bar.value += reductionStep / 100.0f;
+            }
             yield return new WaitForSeconds(HPReductionAnimationStep);
         }
-        
-        
+        HP = newHp;
+        HPText.SetText(HP.ToString());        
+    }
+
+    public void SetHealth(int hp)
+    {
+        HPText.SetText(hp.ToString());
+        Bar.value = hp / 100.0f;
     }
 
     public void SetName(string n)
