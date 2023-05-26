@@ -9,7 +9,8 @@ public class PlayerActor : RPGActor
         SelectingAction,
         SelectingTarget,
         ExecutingAction, 
-        Idle
+        Idle,
+        Waiting
     }
 
     RPGManager man;
@@ -44,6 +45,10 @@ public class PlayerActor : RPGActor
             case State.ExecutingAction:
                 DoSelectedAction();
                 target.SelectAsTarget(false);
+                turnState = State.Waiting;
+                break;
+            case State.Waiting:
+                if (!HealthBarNotification) break;
                 man.EndActualTurn();
                 turnState = State.Idle;
                 break;
@@ -53,6 +58,7 @@ public class PlayerActor : RPGActor
 
     void StartTurn()
     {
+        man.SetCommands(true);
         turnState = State.SelectingAction;
         forSelection.Clear();
         selectionIndex= 0;
@@ -66,12 +72,14 @@ public class PlayerActor : RPGActor
             SelectAction(ActionType.Attack);
             forSelection.AddRange(man.GetEnemies());
             turnState = State.SelectingTarget;
+            man.SetCommands(false);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SelectAction(ActionType.Heal);
             forSelection.AddRange(man.GetHeroes());
             turnState = State.SelectingTarget;
+            man.SetCommands(false);
 
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -79,6 +87,7 @@ public class PlayerActor : RPGActor
             SelectAction(ActionType.Buff);
             forSelection.AddRange(man.GetHeroes());
             turnState = State.SelectingTarget;
+            man.SetCommands(false);
         }     
     }
 
@@ -87,6 +96,7 @@ public class PlayerActor : RPGActor
         if (forSelection.Count < 0) OnEndTurn();
         if(Input.GetKeyDown(KeyCode.Escape)) {
             turnState = State.SelectingAction;
+            man.SetCommands(true);
             return;
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))

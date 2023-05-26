@@ -56,7 +56,7 @@ public class HPBar : MonoBehaviour
         }
     }
 
-    public IEnumerator SetDamage(int newHp)
+    public IEnumerator SetDamage(int newHp, RPGActor toNotify)
     {
         
         float reductionStep = Mathf.Abs(HP - newHp) / (HPReductionAnimationDuration / HPReductionAnimationStep);
@@ -73,7 +73,9 @@ public class HPBar : MonoBehaviour
             yield return new WaitForSeconds(HPReductionAnimationStep);
         }
         HP = newHp;
-        HPText.SetText(HP.ToString());        
+        HPText.SetText(HP.ToString());
+        toNotify.HealthBarNotification = true;
+        if(myActor.GetHealth() == 0) myActor.Die();
     }
 
     public void SetHealth(int hp)

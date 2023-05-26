@@ -16,12 +16,22 @@ public class RPGManager : MonoBehaviour
 
     [SerializeField]
     TMP_Text turnText;
-    
+
+    [SerializeField]
+    TMP_Text HeroesWin;
+
+    [SerializeField]
+    TMP_Text EnemiesWin;
+
+    [SerializeField]
+    TMP_Text Commands;
     Queue<RPGActor> turnQueue;
 
     RPGActor actualTurn;
 
     static RPGManager instance;
+
+    bool ended = false;
 
 
     private void Awake()
@@ -58,11 +68,16 @@ public class RPGManager : MonoBehaviour
 
     private void Update()
     {
-        if(actualTurn == null)
+        if(actualTurn == null && !ended)
         {
             ChangeTurn();
 
         }
+    }
+
+    public void SetCommands(bool s)
+    {
+        Commands.gameObject.SetActive(s);
     }
 
     public void ChangeTurn()
@@ -86,10 +101,11 @@ public class RPGManager : MonoBehaviour
 
     public void EndActualTurn()
     {
+        
         turnQueue.Enqueue(actualTurn);
         actualTurn.SetSelect(false);
         actualTurn.OnEndTurn();
-        ChangeTurn();
+        if (!ended) ChangeTurn();
     }
 
     public List<RPGActor> GetEnemies()
@@ -105,9 +121,9 @@ public class RPGManager : MonoBehaviour
     public void KillCharacter(RPGActor actor)
     {
         Queue<RPGActor> aux = new Queue<RPGActor>();
-        foreach(RPGActor ac in turnQueue)
+        for(int i = 0; i< turnQueue.Count; i++)
         {
-            turnQueue.Dequeue();
+            RPGActor ac = turnQueue.Dequeue();
             if (ac != actor)
             {
                 aux.Enqueue(ac);
@@ -118,14 +134,20 @@ public class RPGManager : MonoBehaviour
         enemies.Remove(actor);
         heroes.Remove(actor);
 
-        if(actor == actualTurn)
-        {
-            actualTurn.SetSelect(false);
-            actualTurn.OnEndTurn();
-            ChangeTurn();
-        }
-
         //if no heroes or no enemies remain, END GAME
+        if (enemies.Count == 0)
+        {
+            HeroesWin.gameObject.SetActive(true);
+            actualTurn.SetSelect(false);
+            ended = true;
+        }
+        if(heroes.Count == 0)
+        {
+            EnemiesWin.gameObject.SetActive(true);
+            actualTurn.SetSelect(false);
+            ended= true;
+        }
+               
     }
 
     public void RegisterHero(RPGActor hero)

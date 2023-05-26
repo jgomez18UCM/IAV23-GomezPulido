@@ -16,7 +16,13 @@ public class EndTurn : Action
 
     public override TaskStatus OnUpdate()
 	{
+        if (!actor.HealthBarNotification)
+        {
+            return TaskStatus.Running;
+        }
+
         RPGManager.GetInstance().EndActualTurn();
+        
 		return TaskStatus.Success;
 	}
 }

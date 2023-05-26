@@ -74,6 +74,13 @@ public class RPGActor : MonoBehaviour
 
     protected List<Buff> buffs = new List<Buff>();
 
+    bool healthBarNotification = false;
+    public bool HealthBarNotification
+    {
+        get { return healthBarNotification; }
+        set { healthBarNotification = value; }
+    }
+
     protected virtual void Awake()
     {
         onTurn = false;
@@ -102,28 +109,28 @@ public class RPGActor : MonoBehaviour
         return onTurn;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, RPGActor toNotify)
     {
         health -= damage;
         if (health < 0)
         {
-            health = 0;
-            Die();
+            health = 0;        
         }
-        StartCoroutine(healthBar.SetDamage(health));
+        StartCoroutine(healthBar.SetDamage(health, toNotify));
+       
     }
 
-    public void TakeHeal(int restored)
+    public void TakeHeal(int restored, RPGActor toNotify)
     {
         health += restored;
         if (health > maxHealth)
         {
             health = maxHealth;
         }
-        StartCoroutine(healthBar.SetDamage(health));
+        StartCoroutine(healthBar.SetDamage(health, toNotify));
     }
 
-    void Die()
+    public void Die()
     {
         gameObject.SetActive(false);
         RPGManager.GetInstance().KillCharacter(this);
@@ -167,6 +174,8 @@ public class RPGActor : MonoBehaviour
         {
             healthBar.DeactivateBuff();
         }
+        healthBarNotification = false;
+       
     }
 
     public void SelectAction(ActionType act)
@@ -192,7 +201,7 @@ public class RPGActor : MonoBehaviour
 
     public void DoSelectedAction()
     {
-        if (target != null && selectedAction != null) selectedAction.ExecuteAction(target, buffs);
+        if (target != null && selectedAction != null) selectedAction.ExecuteAction(target, buffs, this);
         else if (target == null) Debug.LogError($"No selected target for: {actorName}'s action");
         else if (selectedAction == null) Debug.LogError($"No selected action for {actorName}'s turn");
 

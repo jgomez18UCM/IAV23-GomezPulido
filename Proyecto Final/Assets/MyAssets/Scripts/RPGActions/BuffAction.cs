@@ -14,10 +14,11 @@ public class BuffAction : RPGAction
 
     [SerializeField]
     int duration = 3;
-    public override void ExecuteAction(RPGActor target, List<Buff> buffs)
+    public override void ExecuteAction(RPGActor target, List<Buff> buffs, RPGActor doer)
     {
         Buff b = new Buff(type, value, duration);
         target.AddBuff(b);
+        doer.HealthBarNotification = true;
     }
 
     public Buff GetBuff()

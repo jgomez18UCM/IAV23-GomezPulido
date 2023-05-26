@@ -9,7 +9,7 @@ public class AttackAction : RPGAction
     [SerializeField]
     int damage;
 
-    public override void ExecuteAction(RPGActor target, List<Buff> buffs)
+    public override void ExecuteAction(RPGActor target, List<Buff> buffs, RPGActor doer)
     {
 
         int finalDamage = damage;
@@ -26,6 +26,6 @@ public class AttackAction : RPGAction
             finalDamage = 0;
         }
 
-        target.TakeDamage(finalDamage);
+        target.TakeDamage(finalDamage, doer);
     }
 }
