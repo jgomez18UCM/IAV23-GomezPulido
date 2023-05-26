@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8442040676246782491}
   - component: {fileID: 8388608835827843033}
-  - component: {fileID: 2408146730433860006}
   - component: {fileID: 791356177910327308}
   - component: {fileID: 4305059280171607060}
+  - component: {fileID: 4422142438405087232}
+  - component: {fileID: 4071410935836786952}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -58,18 +59,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2408146730433860006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8447242430413663287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd1f8a9ca84a44a4bb786f7454f6e155, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &791356177910327308
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -100,6 +89,67 @@ CapsuleCollider:
   m_Height: 1.005087
   m_Direction: 1
   m_Center: {x: -0, y: 0.4974565, z: -0}
+--- !u!114 &4422142438405087232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447242430413663287}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 1
+  restartWhenComplete: 1
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 1
+  externalBehavior: {fileID: 11400000, guid: 879fc1807dab19d4da7f896a457c8bbf, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"ThisGO","IsShared":true,"GameObjectmValue":0}]}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects:
+        - {fileID: 8447242430413663287}
+        byteData: 
+        byteDataArray: 
+      Version: 1.7.4
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
+--- !u!114 &4071410935836786952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447242430413663287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe05d61ff6eabd4aae127ac83bb6013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack: {fileID: 11400000, guid: 377e4bea7c06fae428d37f43941e01d2, type: 2}
+  heal: {fileID: 0}
+  buff: {fileID: 11400000, guid: 8ae98b959e17f2c4da73c46a4b75ea56, type: 2}
+  defend: {fileID: 0}
+  maxHealth: 100
+  actorName: Slime
+  health: 100
+  healthBar: {fileID: 0}
 --- !u!1 &8447313280885605409
 GameObject:
   m_ObjectHideFlags: 0

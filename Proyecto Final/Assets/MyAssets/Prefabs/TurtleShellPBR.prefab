@@ -532,8 +532,7 @@ MonoBehaviour:
   defend: {fileID: 0}
   maxHealth: 100
   actorName: Turtle
-  damageValue: 10
-  healValue: 5
+  health: 100
   healthBar: {fileID: 0}
 --- !u!114 &2744536735752395364
 MonoBehaviour:

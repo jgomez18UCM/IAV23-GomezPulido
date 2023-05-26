@@ -10,7 +10,7 @@ public class DefendAction : RPGAction
     [SerializeField]
     int damageCovered;
 
-    public override void ExecuteAction(RPGActor target)
+    public override void ExecuteAction(RPGActor target, List<Buff> buffs)
     {
         // target.TakeDamage(damage);
     }

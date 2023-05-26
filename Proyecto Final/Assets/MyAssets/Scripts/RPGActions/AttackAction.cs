@@ -9,8 +9,23 @@ public class AttackAction : RPGAction
     [SerializeField]
     int damage;
 
-    public override void ExecuteAction(RPGActor target)
+    public override void ExecuteAction(RPGActor target, List<Buff> buffs)
     {
-        target.TakeDamage(damage);
+
+        int finalDamage = damage;
+
+        foreach (Buff buff in buffs)
+        {
+            if(buff.Type == BuffType.Damage)
+            {
+                finalDamage += buff.Value;
+            }
+        }
+
+        if(finalDamage < 0) {
+            finalDamage = 0;
+        }
+
+        target.TakeDamage(finalDamage);
     }
 }

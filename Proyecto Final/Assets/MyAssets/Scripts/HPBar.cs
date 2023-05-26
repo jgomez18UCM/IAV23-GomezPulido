@@ -29,19 +29,18 @@ public class HPBar : MonoBehaviour
     [SerializeField]
     TMP_Text nameLabel;
 
-    RPGActor myActor;
-    // Start is called before the first frame update
-    private void Update()
-    {
-        if(myActor != null && HP == -1)
-        {
+    [SerializeField]
+    Image BuffImage;
 
-        }
-    }
+    [SerializeField]
+    TMP_Text BuffText;
+
+    RPGActor myActor;
 
     public void SetActor(RPGActor actor)
     {
         myActor = actor;
+        HP = actor.GetHealth();
         Bar.value = actor.GetHealth() / 100.0f;
         nameLabel.text = actor.Name;
         HPText.SetText(actor.GetHealth().ToString());
@@ -83,5 +82,16 @@ public class HPBar : MonoBehaviour
     public void SetName(string n)
     {
         nameLabel.text = n;
+    }
+
+    public void DisplayBuff(Buff b)
+    {
+        BuffImage.gameObject.SetActive(true);
+        BuffText.SetText(b.Duration.ToString());
+    }
+
+    public void DeactivateBuff()
+    {
+        BuffImage.gameObject.SetActive(false);
     }
 }

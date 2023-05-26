@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class RPGAction :ScriptableObject
 {
-    public abstract void ExecuteAction(RPGActor target);
+    public abstract void ExecuteAction(RPGActor target, List<Buff> buffs);
    
 }
 

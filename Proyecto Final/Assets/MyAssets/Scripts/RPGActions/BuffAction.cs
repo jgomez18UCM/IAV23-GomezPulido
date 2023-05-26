@@ -7,10 +7,21 @@ using UnityEngine;
 public class BuffAction : RPGAction
 {
     [SerializeField]
-    int buff;
+    int value = 2;
 
-    public override void ExecuteAction(RPGActor target)
+    [SerializeField]
+    BuffType type = BuffType.Damage;
+
+    [SerializeField]
+    int duration = 3;
+    public override void ExecuteAction(RPGActor target, List<Buff> buffs)
     {
-        // target.TakeDamage(damage);
+        Buff b = new Buff(type, value, duration);
+        target.AddBuff(b);
+    }
+
+    public Buff GetBuff()
+    {
+        return new Buff(type, value, duration);
     }
 }

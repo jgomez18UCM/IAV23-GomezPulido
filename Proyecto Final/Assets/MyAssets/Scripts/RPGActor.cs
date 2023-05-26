@@ -1,3 +1,4 @@
+using BehaviorDesigner.Runtime.Tactical;
 using BehaviorDesigner.Runtime.Tactical.Tasks;
 using System.Collections;
 using System.Collections.Generic;
@@ -71,6 +72,8 @@ public class RPGActor : MonoBehaviour
     public delegate void StartTurnFunc();
     public StartTurnFunc OnStartTurn;
 
+    protected List<Buff> buffs = new List<Buff>();
+
     protected virtual void Awake()
     {
         onTurn = false;
@@ -92,6 +95,7 @@ public class RPGActor : MonoBehaviour
     {
         onTurn = true;
         StartCoroutine(EndTurn());
+        
         Debug.Log("Empezando Turno: " + gameObject.name);
     }
 
@@ -162,6 +166,17 @@ public class RPGActor : MonoBehaviour
         startTurn = false;
         target = null;
         selectedAction = null;
+        foreach(Buff b in buffs)
+        {
+            b.OnTurnEnd();
+            healthBar.DisplayBuff(b);
+        }
+
+        buffs.RemoveAll(x => x.Duration <= 0);
+        if(buffs.Count == 0)
+        {
+            healthBar.DeactivateBuff();
+        }
     }
 
     public void SelectAction(ActionType act)
@@ -187,10 +202,36 @@ public class RPGActor : MonoBehaviour
 
     public void DoSelectedAction()
     {
-        if (target != null && selectedAction != null) selectedAction.ExecuteAction(target);
+        if (target != null && selectedAction != null) selectedAction.ExecuteAction(target, buffs);
         else if (target == null) Debug.LogError($"No selected target for: {actorName}'s action");
         else if (selectedAction == null) Debug.LogError($"No selected action for {actorName}'s turn");
 
+    }
+
+    public List<Buff> GetBuffs()
+    {
+        return buffs;
+    }
+
+    public bool HasBuff(Buff buff)
+    {
+        return buffs.Contains(buff);
+    }
+
+    public void AddBuff(Buff buff)
+    {
+        if(!buffs.Contains(buff))
+        {
+            buffs.Add(buff);
+            healthBar.DisplayBuff(buff);
+        }
+        else
+        {
+            Buff aux = buffs.Find(x => x==buff);
+            aux.AddDuration(buff.Duration);
+            healthBar.DisplayBuff(aux);
+        }
+       
     }
 
 }

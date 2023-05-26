@@ -16,10 +16,7 @@ public class EnemyActor : RPGActor
     {
         base.Start();
         tree = GetComponent<BehaviorTree>();
-        tree.enabled = false;
-      
-
-       
+        tree.enabled = false;       
     }
     public void StartTree()
     {

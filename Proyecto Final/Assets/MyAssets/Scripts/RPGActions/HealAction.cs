@@ -9,7 +9,7 @@ public class HealAction : RPGAction
     [SerializeField]
     int value;
 
-    public override void ExecuteAction(RPGActor target)
+    public override void ExecuteAction(RPGActor target, List<Buff> buffs)
     {
        target.TakeHeal(value);
     }
