@@ -2,6 +2,7 @@ using BehaviorDesigner.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,7 +29,6 @@ public class RPGManager : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
@@ -135,5 +135,18 @@ public class RPGManager : MonoBehaviour
 
     public void RegisterEnemy(RPGActor enemy) {
         if (!enemies.Contains(enemy)) enemies.Add(enemy);
+    }
+
+    public void Reload()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying= false;
+#endif
     }
 }
