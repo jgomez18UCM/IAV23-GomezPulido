@@ -24,7 +24,7 @@ public class HPBar : MonoBehaviour
     float HPReductionAnimationDuration = 1f;
 
     [SerializeField]
-    GameObject SelectedImage;
+    GameObject TurnImage;
 
     [SerializeField]
     TMP_Text nameLabel;
@@ -34,6 +34,9 @@ public class HPBar : MonoBehaviour
 
     [SerializeField]
     TMP_Text BuffText;
+
+    [SerializeField]
+    Image SelectedTarget;
 
     RPGActor myActor;
 
@@ -47,9 +50,9 @@ public class HPBar : MonoBehaviour
     }
     public void SetSelected(bool selected)
     {
-        if(SelectedImage != null)
+        if(TurnImage != null)
         {
-            SelectedImage.SetActive(selected);
+            TurnImage.SetActive(selected);
         }
     }
 
@@ -86,6 +89,7 @@ public class HPBar : MonoBehaviour
 
     public void DisplayBuff(Buff b)
     {
+        
         BuffImage.gameObject.SetActive(true);
         BuffText.SetText(b.Duration.ToString());
     }
@@ -93,5 +97,10 @@ public class HPBar : MonoBehaviour
     public void DeactivateBuff()
     {
         BuffImage.gameObject.SetActive(false);
+    }
+
+    public void SetAsTarget(bool t)
+    {
+        SelectedTarget.gameObject.SetActive(t);
     }
 }

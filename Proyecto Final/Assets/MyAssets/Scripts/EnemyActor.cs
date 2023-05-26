@@ -21,6 +21,7 @@ public class EnemyActor : RPGActor
     public void StartTree()
     {
         onTurn = true;
+        if(tree == null) tree = GetComponent<BehaviorTree>();  
         tree.enabled = true;
         tree.EnableBehavior();
         Debug.Log("Empezando Turno: " + gameObject.name);

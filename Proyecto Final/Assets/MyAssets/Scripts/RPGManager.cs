@@ -2,8 +2,6 @@ using BehaviorDesigner.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -55,7 +53,16 @@ public class RPGManager : MonoBehaviour
             turnQueue.Enqueue(actor);
         }
 
-        ChangeTurn();
+       
+    }
+
+    private void Update()
+    {
+        if(actualTurn == null)
+        {
+            ChangeTurn();
+
+        }
     }
 
     public void ChangeTurn()
@@ -117,6 +124,8 @@ public class RPGManager : MonoBehaviour
             actualTurn.OnEndTurn();
             ChangeTurn();
         }
+
+        //if no heroes or no enemies remain, END GAME
     }
 
     public void RegisterHero(RPGActor hero)

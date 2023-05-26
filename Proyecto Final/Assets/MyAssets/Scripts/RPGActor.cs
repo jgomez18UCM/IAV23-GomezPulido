@@ -94,9 +94,6 @@ public class RPGActor : MonoBehaviour
     void StartTurn()
     {
         onTurn = true;
-        StartCoroutine(EndTurn());
-        
-        Debug.Log("Empezando Turno: " + gameObject.name);
     }
 
 
@@ -131,13 +128,6 @@ public class RPGActor : MonoBehaviour
         gameObject.SetActive(false);
         RPGManager.GetInstance().KillCharacter(this);
         
-    }
-
-    IEnumerator EndTurn()
-    {
-        yield return new WaitForSeconds(3);
-        onTurn = false;
-        RPGManager.GetInstance().EndActualTurn();
     }
 
     public void SetSelect(bool select)
@@ -232,6 +222,14 @@ public class RPGActor : MonoBehaviour
             healthBar.DisplayBuff(aux);
         }
        
+    }
+
+    public void SelectAsTarget(bool t)
+    {
+        if(healthBar != null)
+        {
+            healthBar.SetAsTarget(t);
+        }
     }
 
 }

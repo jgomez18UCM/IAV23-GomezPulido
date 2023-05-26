@@ -670,10 +670,11 @@ MonoBehaviour:
   HPText: {fileID: 4252247196055522553}
   HPReductionAnimationStep: 0.1
   HPReductionAnimationDuration: 1
-  SelectedImage: {fileID: 336592877824261826}
+  TurnImage: {fileID: 336592877824261826}
   nameLabel: {fileID: 8512663123452111535}
   BuffImage: {fileID: 7961786681912245486}
   BuffText: {fileID: 1529628983709855695}
+  SelectedTarget: {fileID: 7237667704473252766}
 --- !u!1 &7886788156550358321
 GameObject:
   m_ObjectHideFlags: 0
