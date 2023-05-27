@@ -49,7 +49,7 @@ Además en caso de que **falle** la tarea de Select Target o Execute Action, me 
 
 ## Pruebas y métricas
 
-- [Vídeo con la batería de pruebas]
+- [Vídeo con la batería de pruebas](https://youtu.be/QM7yfxHrFJE)
 
 ## Referencias y Paqutes
 

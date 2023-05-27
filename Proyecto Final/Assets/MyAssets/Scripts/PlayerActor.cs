@@ -96,6 +96,8 @@ public class PlayerActor : RPGActor
         if (forSelection.Count < 0) OnEndTurn();
         if(Input.GetKeyDown(KeyCode.Escape)) {
             turnState = State.SelectingAction;
+            forSelection[selectionIndex].SelectAsTarget(false);
+            forSelection.Clear();
             man.SetCommands(true);
             return;
         }
